@@ -149,40 +149,26 @@ namespace Fishy.Utils
                         string body = data["body"].ToString() ?? "";
                         CommandHandler.OnMessage(packet.SteamId, body);
                         break;
-                    case "chalk_update":
-                        Dictionary<int, object> ChalkPacketData = (Dictionary<int, object>)packetInfo["data"];
+                    case "chalk_packet":
+                        var ChalkPacketData = (Dictionary<int, object>)packetInfo["data"];
 
                         Int64 CanvasID = (Int64)packetInfo["canvas_id"];
-                        var ChalkLocationObj = ChalkPacketData[0];
-                        var ChalkColorObj = ChalkPacketData[1];
 
-                        Vector2 chalkLocation = (Vector2)ChalkPacketData[0];
-                        int chalkColor = (int)ChalkColorObj;
-
-                        // Check for duplicates
-                        if (Fishy.CanvasData[CanvasID].ContainsKey(chalkLocation))
+                        foreach (var DataPointObj in ChalkPacketData.Values)
                         {
-                            Fishy.CanvasData[CanvasID].Add(chalkLocation, chalkColor);
-                        }
+                            Dictionary<int, object> DataPoint = (Dictionary<int, object>)DataPointObj;
 
-                        ///
-                        Console.WriteLine("Printing all values from CanvasData:");
-                        for (int i = 0; i < Fishy.CanvasData.Length; i++)
-                        {
-                            Console.WriteLine($"Dictionary at index {i}:");
-                            if (Fishy.CanvasData[i] != null)
+                            var ChalkLocationObj = DataPoint[0];
+                            var ChalkColorObj = DataPoint[1];
+
+                            Vector2 chalkLocation = (Vector2)ChalkLocationObj;
+                            Int64 chalkColor = (Int64)ChalkColorObj;
+
+                            if (!Fishy.CanvasData[CanvasID].ContainsKey(chalkLocation))
                             {
-                                foreach (var kvp in Fishy.CanvasData[i])
-                                {
-                                    Console.WriteLine($"  Location: {kvp.Key}, Color: {kvp.Value}");
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("  This dictionary is empty or null.");
+                                Fishy.CanvasData[CanvasID].Add(chalkLocation, chalkColor);
                             }
                         }
-                        ///
                         break;
 
                     default: break;

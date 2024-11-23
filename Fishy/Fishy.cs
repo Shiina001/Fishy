@@ -14,7 +14,7 @@ namespace Fishy
         public static SteamHandler SteamHandler = new();
         public static NetworkHandler NetworkHandler = new();
         public static List<string> BannedUsers = [];
-        public static Dictionary<Vector2, int>[] CanvasData = [];
+        public static Dictionary<Vector2, Int64>[] CanvasData = [];
         static readonly string configPath = Path.Combine(AppContext.BaseDirectory, "config.toml");
         static readonly string bansPath = Path.Combine(AppContext.BaseDirectory, "bans.txt");
         static List<string> commandBuffer = [];
