@@ -58,6 +58,7 @@ namespace Fishy.Utils
                 (int)GodotTypes.Int => ReadInt((flags & 1) == 1),
                 (int)GodotTypes.Float => ReadFloat((flags & 1) == 1),
                 (int)GodotTypes.String => ReadString(),
+                (int)GodotTypes.Vector2 => ReadVector2(),
                 (int)GodotTypes.Vector3 => ReadVector3(),
                 (int)GodotTypes.Dictionary => ReadDictionary(),
                 (int)GodotTypes.Array => ReadArray(),
@@ -70,6 +71,9 @@ namespace Fishy.Utils
 
         private double ReadFloat(bool is64)
             => is64 ? _binaryReader.ReadDouble() : _binaryReader.ReadSingle();
+
+        private Vector2 ReadVector2()
+             => new(_binaryReader.ReadSingle(), _binaryReader.ReadSingle());
 
         private Vector3 ReadVector3()
             => new(_binaryReader.ReadSingle(), _binaryReader.ReadSingle(), _binaryReader.ReadSingle());

@@ -1,6 +1,7 @@
 ﻿using Fishy.Models;
 using Fishy.Models.Packets;
 using Fishy.Utils;
+using System.Numerics;
 
 namespace Fishy
 {
@@ -13,6 +14,7 @@ namespace Fishy
         public static SteamHandler SteamHandler = new();
         public static NetworkHandler NetworkHandler = new();
         public static List<string> BannedUsers = [];
+        public static Dictionary<Vector2, int>[] CanvasData = [];
         static readonly string configPath = Path.Combine(AppContext.BaseDirectory, "config.toml");
         static readonly string bansPath = Path.Combine(AppContext.BaseDirectory, "bans.txt");
         static List<string> commandBuffer = [];
