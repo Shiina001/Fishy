@@ -164,11 +164,41 @@ namespace Fishy.Utils
                             Vector2 chalkLocation = (Vector2)ChalkLocationObj;
                             Int64 chalkColor = (Int64)ChalkColorObj;
 
+                            if (Fishy.CanvasData[CanvasID] == null)
+                            {
+                                Fishy.CanvasData[CanvasID] = new Dictionary<Vector2, Int64>();
+                            }
+
                             if (!Fishy.CanvasData[CanvasID].ContainsKey(chalkLocation))
                             {
                                 Fishy.CanvasData[CanvasID].Add(chalkLocation, chalkColor);
                             }
                         }
+
+                        for (int i = 0; i < Fishy.CanvasData.Length; i++)
+                        {
+                            // Check if the dictionary for this canvas exists
+                            if (Fishy.CanvasData[i] != null)
+                            {
+                                Console.WriteLine($"Canvas {i}:");
+
+                                // Iterate over the dictionary for this canvas
+                                foreach (var entry in Fishy.CanvasData[i])
+                                {
+                                    // entry.Key is the Vector2 (chalk location)
+                                    // entry.Value is the Int64 (chalk color)
+                                    Vector2 chalkLocation = entry.Key;
+                                    Int64 chalkColor = entry.Value;
+
+                                    Console.WriteLine($"  Location: ({chalkLocation.X}, {chalkLocation.Y}), Color: {chalkColor}");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Canvas {i} is not initialized.");
+                            }
+                        }
+
                         break;
 
                     default: break;
